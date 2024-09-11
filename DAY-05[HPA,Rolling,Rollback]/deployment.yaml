@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodejs-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: day-05-hpa
+  template:
+    metadata:
+      labels:
+        app: day-05-hpa
+    spec:
+      containers:
+      - name: day-05-hpa
+        image: dhineshpandian/day-05-hpa:latest
+        ports:     
+        - containerPort: 3000

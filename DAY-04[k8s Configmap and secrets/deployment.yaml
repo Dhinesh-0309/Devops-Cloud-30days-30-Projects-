@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: day-04-congfigmap-secrets
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: day-4-express-db
+  template:
+    metadata:
+      labels:
+        app: day-4-express-db
+    spec:
+      containers:
+      - name: day-4-express-db
+        image: dhineshpandian/day-4-express-db:latest
+        ports:
+        - containerPort: 3000
+        env:
+        - name: API_ENDPOINT
+          valueFrom:
+            configMapKeyRef:
+              name: dhineshpandian-configmap
+              key: API_ENDPOINT
+        - name: LOG_LEVEL
+          valueFrom:
+            configMapKeyRef:
+              name: dhineshpandian-configmap
+              key: LOG_LEVEL
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: dhineshpandian-secrets
+              key: DB_PASSWORD
